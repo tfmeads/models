@@ -29,7 +29,7 @@ MODEL_DIR=syntaxnet/models/parsey_mcparseface
 
 $PARSER_EVAL \
   --input=$INPUT_FORMAT \
-  --output=stdout-conll \
+  --output=fileOutput \
   --hidden_layer_sizes=64 \
   --arg_prefix=brain_tagger \
   --graph_builder=structured \
@@ -37,7 +37,6 @@ $PARSER_EVAL \
   --model_path=$MODEL_DIR/tagger-params \
   --slim_model \
   --batch_size=1024 \
-  --alsologtostderr \
    | \
   $PARSER_EVAL \
   --input=stdin-conll \
@@ -49,8 +48,6 @@ $PARSER_EVAL \
   --model_path=$MODEL_DIR/parser-params \
   --slim_model \
   --batch_size=1024 \
-  --alsologtostderr \
   | \
   bazel-bin/syntaxnet/conll2tree \
   --task_context=$MODEL_DIR/context.pbtxt \
-  --alsologtostderr
